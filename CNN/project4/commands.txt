@@ -1,0 +1,18 @@
+----Commands used in Cloud Shell to upload code into GCP to train the model----
+
+
+gsutil cp -r D:\\4thyrproject\X.pickle gs://project4_data/X.pickle
+
+python -m trainer.model --train-file=X.pickle --job-dir=./tmp/model1
+python -m trainer.model --train-file=gs://project4_data/X.pickle --job-dir=./tmp/model-1
+
+gcloud ml-engine local train --module-name trainer.model --package-path ./trainer -- \--train-file X.pickle --job-dir ./tmp/model-1
+gcloud ml-engine local train --module-name trainer.model --package-path ./trainer -- --train-file X.pickle --job-dir ./tmp/model1
+  export BUCKET_NAME=project4_dataset
+  export JOB_NAME="model_1_train_$(date +%Y%m%d_%H%M%S)"
+  export JOB_DIR=gs://project4_dataset/output
+  export REGION=europe-north1
+
+TRAIN ON THE CLOUD
+gcloud ml-engine jobs submit training model_25_train --job-dir gs://project4_data/output --runtime-version 1.0 --module-name trainer.model --package-path ./trainer --region europe-west1 --config=trainer/cloudml-gpu.yaml -- --train-file gs://project4_data/training_data2.pickle
+gcloud ml-engine jobs submit training model_1_train --job-dir gs://project4_data/output --runtime-version 1.0 --module-name trainer.model --package-path ./trainer --python-version 3.6 --region europe-west1 --config=trainer/cloudml-gpu.yaml -- --train-file gs://project4_data/X2.pickle --runtime-version 1.12
