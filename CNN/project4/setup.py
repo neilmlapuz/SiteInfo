@@ -9,7 +9,7 @@ setup(name='trainer',
   author_email='naruto_neil03@yahoo.com',
   license='MIT',
   install_requires=[
-      'keras==2.1.4',
+      'keras==2.13.1',
       'h5py'
   ],
   zip_safe=False)
